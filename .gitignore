@@ -160,3 +160,9 @@ cython_debug/
 #.idea/
 
 .conda
+
+dataset
+runs
+yolov8n-cls.pt
+out
+out.*
