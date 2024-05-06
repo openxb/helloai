@@ -15,13 +15,18 @@ class ModelTester():
     def run(self):
         with open("out.csv", "w") as csv_file:
             writer = csv.writer(csv_file, delimiter=',')
+            writer.writerow(["image_path", "ground_truth", "prediction", "test_result"])
             
             for image_dir in tqdm([ f.path for f in os.scandir(self.input_dir) if f.is_dir() ]):
                 for image_file in tqdm(os.listdir(image_dir)):
+                    image_path = os.path.join(image_dir, image_file)
+                    ground_truth = os.path.basename(image_dir)
+                    prediction = self.run_image(os.path.join(image_dir, image_file))
                     writer.writerow([
-                        image_file,
-                        os.path.basename(image_dir),
-                        self.run_image(os.path.join(image_dir, image_file))
+                        image_path,
+                        ground_truth,
+                        prediction,
+                        (ground_truth == prediction)
                     ])
     
     def run_image(self, image: str) -> str:
